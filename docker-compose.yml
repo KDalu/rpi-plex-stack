@@ -2,9 +2,10 @@ services:
   protonvpn:
     container_name: protonvpn
     image: ghcr.io/tprasadtp/protonwire:7.5.3
+    restart: unless-stopped
     environment:
-      - WIREGUARD_PRIVATE_KEY=${WG_KEY}
-      - PROTONVPN_SERVER=${SERVER_ADDR}
+      - WIREGUARD_PRIVATE_KEY=${WG_KEY} # vpn private key, defined in .env
+      - PROTONVPN_SERVER=${SERVER_ADDR} # vpn server address, defined in .env
     cap_add:
       - NET_ADMIN
     sysctls:
