@@ -5,18 +5,18 @@
 # Usage: setup_plex_stack.sh <PATH_TO_WIREGUARD_CONF_FILE>
 
 # Update package lists and install them
-echo Updating package lists...
+echo "Updating package lists..."
 sudo apt update
 
-echo Installing updates...
+echo "Installing updates..."
 sudo apt full-upgrade
 
 # Install and start raspberry pi connect
-echo Installing Raspberry Pi Connect...
+echo "Installing Raspberry Pi Connect..."
 sudo apt install rpi-connect
 rpi-connect on
 
-echo Signing in to RPI Connect...
+echo "Signing in to RPI Connect..."
 rpi-connect signin
 
 # Setup service to start RPI connect on boot
@@ -24,6 +24,7 @@ rpi-connect signin
 # Disable IPv6 on wireless interface
 
 # Setup service to disable power_save on wireless interface
+echo "Disabling power save on wlan..."
 sudo cat > /etc/systemd/system/wlan0pwr.service << EOL
 [Unit]
 Description=Disable wlan0 powersave
