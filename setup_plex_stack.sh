@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This script is created for Raspberry Pi 5 running Raspberry Pi OS Bookworm
 
 # Usage: setup_plex_stack.sh <PATH_TO_WIREGUARD_CONF_FILE>
@@ -20,6 +22,23 @@ rpi-connect signin
 # Setup service to start RPI connect on boot
 
 # Disable IPv6 on wireless interface
+
+# Setup service to disable power_save on wireless interface
+sudo cat > /etc/systemd/system/wlan0pwr.service << EOL
+[Unit]
+Description=Disable wlan0 powersave
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/iw wlan0 set power_save off
+
+[Install]
+WantedBy=multi-user.target
+EOL
+
+sudo systemctl enable wlan0pwr
 
 # Install wireguard
 echo Installing Wireguard...
